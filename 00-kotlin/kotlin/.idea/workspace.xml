@@ -27,13 +27,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/escritorio.virtual4/Documents/mov-soft-lm45/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.5241379"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
@@ -58,6 +62,9 @@
       <updated>1684416985830</updated>
       <workItem from="1684416988564" duration="13777000" />
       <workItem from="1685449765796" duration="4719000" />
+      <workItem from="1686198029633" duration="312000" />
+      <workItem from="1686199184977" duration="685000" />
+      <workItem from="1686199916247" duration="55000" />
     </task>
     <servers />
   </component>

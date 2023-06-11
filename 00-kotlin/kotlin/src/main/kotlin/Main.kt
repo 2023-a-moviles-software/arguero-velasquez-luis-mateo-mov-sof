@@ -1,3 +1,4 @@
+@file:JvmName("Main")
 import java.util.Date
 
 fun main(args: Array<String>) {
