@@ -124,11 +124,14 @@ public class Dashboard extends javax.swing.JFrame {
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Mi panaderï¿½a");
+        setTitle("Mi panadería");
+        setBackground(new java.awt.Color(250, 250, 250));
+
+        jPanel1.setBackground(new java.awt.Color(250, 250, 250));
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("<html><span style=\"text-align: center;\">Fecha de elaboraciï¿½n</span></html>");
+        jLabel2.setText("<html><span style=\"text-align: center;\">Fecha de elaboración</span></html>");
 
         jLabel3.setText("Precio");
 
@@ -144,7 +147,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Aï¿½adir");
+        jButton1.setText("Añadir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -217,6 +220,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Hornear", jPanel1);
 
+        jPanel2.setBackground(new java.awt.Color(250, 250, 250));
+
         jSSellBreadCount.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         jButton3.setText("Vender");
@@ -258,6 +263,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Vender", jPanel2);
 
+        jPanel3.setBackground(new java.awt.Color(250, 250, 250));
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -281,9 +288,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Consultar", jPanel3);
 
+        jPanel4.setBackground(new java.awt.Color(250, 250, 250));
+
         jCBDiscardAll.setText("Todos");
 
-        jLabel6.setText("<html>Edad Mï¿½xima<br>(Dias)</html>");
+        jLabel6.setText("<html>Edad Máxima<br>(Dias)</html>");
 
         jSMaxAge.setModel(new javax.swing.SpinnerNumberModel(1, 0, null, 1));
 
@@ -335,6 +344,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Descartar", jPanel4);
 
+        jPanel5.setBackground(new java.awt.Color(250, 250, 250));
+
+        jPanel6.setBackground(new java.awt.Color(250, 250, 250));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Panes en Stock"));
 
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {

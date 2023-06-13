@@ -11,17 +11,24 @@ class SingletonManager {
 
     companion object{
         private var bakery:Bakery? = null;
-        fun initBakery(){
+        private var bakeryName:String = "instance";
+
+        fun setContext(bakeryName:String):Boolean{
+            this.bakeryName = bakeryName;
+            return File("$bakeryName.json").isFile;
+        }
+
+        private fun initBakery(){
             var bakery = loadBakery();
             if (bakery==null){
-                bakery = Bakery("Los coco")
+                bakery = Bakery(bakeryName)
             }
             this.bakery=bakery;
         }
 
         private fun readInstanceFile():String?{
             return try {
-                File("instance.json").readText();
+                File("$bakeryName.json").readText();
             } catch (v:FileNotFoundException){
                 null;
             }
@@ -46,7 +53,7 @@ class SingletonManager {
         }
 
         fun saveBakery(bakeryString: String){
-            File("instance.json").writeText(bakeryString)
+            File("$bakeryName.json").writeText(bakeryString)
         }
 
         fun setBakery(bakery:Bakery){

@@ -1,6 +1,7 @@
 package epn.mov.bakery;
 
 import epn.mov.bakery.gui.Dashboard;
+import epn.mov.bakery.gui.Login;
 
 public class MainClass {
     public static void main(String[] args) {
@@ -21,8 +22,8 @@ public class MainClass {
             java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
-        Dashboard dashboard = new Dashboard();
+        Login login = new Login();
 
-        dashboard.setVisible(true);
+        login.setVisible(true);
     }
 }
