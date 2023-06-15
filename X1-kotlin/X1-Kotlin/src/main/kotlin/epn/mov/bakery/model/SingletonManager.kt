@@ -10,56 +10,36 @@ import java.util.*
 class SingletonManager {
 
     companion object{
-        private var bakery:Bakery? = null;
         private var bakeryName:String = "instance";
+        private var bakery:Bakery = Bakery(bakeryName,"","");
 
         fun setContext(bakeryName:String):Boolean{
             this.bakeryName = bakeryName;
+            initBakery()
             return File("$bakeryName.json").isFile;
         }
 
         private fun initBakery(){
             var bakery = loadBakery();
-            if (bakery==null){
-                bakery = Bakery(bakeryName)
+            if (bakery!=null){
+                this.bakery = bakery
             }
-            this.bakery=bakery;
         }
 
-        private fun readInstanceFile():String?{
-            return try {
-                File("$bakeryName.json").readText();
-            } catch (v:FileNotFoundException){
-                null;
-            }
-
-        }
-        private fun parseJsonToObject(string:String):Bakery{
-            return Json.decodeFromString(string);
-        }
-
-        fun loadBakery():Bakery?{
-            val jsonString = readInstanceFile() ?: return null
-            return parseJsonToObject(jsonString!!)
+        private fun loadBakery():Bakery?{
+            val jsonString = try { File("$bakeryName.json").readText()}
+                catch (v:FileNotFoundException){ return null }
+            return Json.decodeFromString(jsonString!!)
         }
 
         fun getBakery():Bakery{
-            if(bakery==null) initBakery()
             return bakery!!;
-        }
-
-        fun parseBakeryToJson(bakery: Bakery):String{
-            return Json.encodeToString(bakery);
-        }
-
-        fun saveBakery(bakeryString: String){
-            File("$bakeryName.json").writeText(bakeryString)
         }
 
         fun setBakery(bakery:Bakery){
             this.bakery = bakery;
-            val bakeryString = parseBakeryToJson(bakery);
-            saveBakery(bakeryString)
+            val bakeryString = Json.encodeToString(bakery);
+            File("${bakery.getName()}.json").writeText(bakeryString)
         }
     }
 

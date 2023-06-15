@@ -7,12 +7,18 @@ import java.util.*
 @kotlinx.serialization.Serializable
 public class Bakery(
     private var name:String,
+    private var ruc:String,
+    private var address:String,
     protected val breads:HashMap<String, MutableList<Bread>>
 ){
 
-    constructor(name:String) : this(name,HashMap())
+    constructor(name:String,ruc:String,address:String) : this(name,ruc,address,HashMap())
     fun getName():String{
         return name;
+    }
+
+    fun setName(name:String){
+        this.name = name;
     }
 
     fun getBreadsCount():Map<String,Int>{
@@ -91,6 +97,8 @@ public class Bakery(
     companion object{
         fun map(parameters:Map<String,Object>):Bakery?{
             val name = parameters["name"] as String
+            val ruc = parameters["ruc"] as String
+            val address = parameters["address"] as String
             val breads:HashMap<String,MutableList<Bread>> = HashMap<String,MutableList<Bread>>(
                 (parameters["breads"] as Map<String,List<Map<String,Object>>>)
                     .mapValues {
@@ -99,7 +107,7 @@ public class Bakery(
                         return@mapValues mutableListOf(*breadList);
                     }
             )
-            return Bakery(name,breads);
+            return Bakery(name,ruc,address,breads);
         }
     }
 

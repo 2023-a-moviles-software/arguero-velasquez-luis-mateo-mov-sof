@@ -102,11 +102,13 @@ public class Login extends javax.swing.JFrame {
 
         Boolean bakeryExists = SingletonManager.Companion.setContext(bakeryName);
 
-        if(bakeryExists) JOptionPane.showMessageDialog(null,"Panadería ya existente, se ha cargado.","Carga exitosa",JOptionPane.INFORMATION_MESSAGE);
-        else JOptionPane.showMessageDialog(null,"Panadería nueva creada.","Creación exitosa",JOptionPane.INFORMATION_MESSAGE);
-
-        Dashboard dashboard = new Dashboard();
-        dashboard.setVisible(true);
+        if(bakeryExists){
+            JOptionPane.showMessageDialog(null,"Panadería ya existente, se ha cargado.","Carga exitosa",JOptionPane.INFORMATION_MESSAGE);
+            new Dashboard().setVisible(true);
+        }
+        else{
+            new Register(bakeryName).setVisible(true);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
