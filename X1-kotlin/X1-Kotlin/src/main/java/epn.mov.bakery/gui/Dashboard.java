@@ -124,14 +124,14 @@ public class Dashboard extends javax.swing.JFrame {
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Mi panaderï¿½a");
+        setTitle("Mi panadería");
         setBackground(new java.awt.Color(250, 250, 250));
 
         jPanel1.setBackground(new java.awt.Color(250, 250, 250));
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("<html><span style=\"text-align: center;\">Fecha de elaboraciï¿½n</span></html>");
+        jLabel2.setText("<html><span style=\"text-align: center;\">Fecha de elaboración</span></html>");
 
         jLabel3.setText("Precio");
 
@@ -147,7 +147,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Aï¿½adir");
+        jButton1.setText("A?adir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -292,7 +292,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jCBDiscardAll.setText("Todos");
 
-        jLabel6.setText("<html>Edad Mï¿½xima<br>(Dias)</html>");
+        jLabel6.setText("<html>Edad Máxima<br>(Días)</html>");
 
         jSMaxAge.setModel(new javax.swing.SpinnerNumberModel(1, 0, null, 1));
 

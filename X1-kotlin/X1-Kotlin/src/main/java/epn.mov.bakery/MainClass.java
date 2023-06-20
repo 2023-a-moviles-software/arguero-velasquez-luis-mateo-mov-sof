@@ -5,6 +5,7 @@ import epn.mov.bakery.gui.Login;
 
 public class MainClass {
     public static void main(String[] args) {
+        System.setProperty("file.encoding", "UTF-8");
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {

@@ -96,14 +96,14 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String bakeryName = jTextField1.getText().toLowerCase().replace(" ", "_");
         if(!bakeryName.matches("\\w([\\w\\s]+\\w)?")){
-            JOptionPane.showMessageDialog(this, "Nombre ingresado no es vï¿½lido.<br>Ocupe, solo letras y espacios");
+            JOptionPane.showMessageDialog(this, "Nombre ingresado no es v?lido.<br>Ocupe, solo letras y espacios");
             return;
         }
 
         Boolean bakeryExists = SingletonManager.Companion.setContext(bakeryName);
 
         if(bakeryExists){
-            JOptionPane.showMessageDialog(null,"PanaderÃ­a ya existente, se ha cargado.","Carga exitosa",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Panadería ya existente, se ha cargado.","Carga exitosa",JOptionPane.INFORMATION_MESSAGE);
             new Dashboard().setVisible(true);
         }
         else{
