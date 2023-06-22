@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(layout.activity_main)
 
         val btnACicloVida = findViewById<Button>(id.btn_ciclo_vida)
+        val btnBListView = findViewById<Button>(id.btn_list_view)
         btnACicloVida.setOnClickListener { irActividad(AACicloVida::class.java) }
+        btnBListView.setOnClickListener { irActividad(BListView::class.java) }
     }
 
     fun irActividad(clazz:Class<*>){
