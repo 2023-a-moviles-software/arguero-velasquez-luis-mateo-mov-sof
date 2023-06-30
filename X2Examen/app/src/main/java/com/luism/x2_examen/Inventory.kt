@@ -25,18 +25,18 @@ import epn.mov.bakery.model.Bread
 
 class Inventory : AppCompatActivity() {
     private var selectedIndex:Int = 0
-    private var bakery:Bakery = Bakery("","","")
-    private var breadAdapter = BreadAdapter(this,bakery)
+    private var bakery:Bakery? = null
+    private var breadAdapter:BreadAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
         setContentView(layout.activity_inventory)
 
-        bakery = SingletonManager.getBakery()
-        breadAdapter = BreadAdapter(this,bakery)
+        val bakeryName = intent.getStringExtra("bakeryName")
+
+        bakery = SingletonManager.bakeries[bakeryName]!!
+        breadAdapter = BreadAdapter(this,bakery!!)
 
         val breadListView = findViewById<ListView>(R.id.lv_breads)
         breadListView.adapter = breadAdapter
@@ -44,7 +44,9 @@ class Inventory : AppCompatActivity() {
 
         val fabAddBread = findViewById<FloatingActionButton>(R.id.fab_add)
         R.id.fab_add.then<Int,FloatingActionButton>(::findViewById).setOnClickListener{
-            Intent(this,NewBread::class.java).then { startActivity(it) }
+            Intent(this,NewBread::class.java)
+                .putExtra("bakeryName",bakeryName)
+                .then { startActivity(it) }
         }
 
         R.id.lv_breads.then<Int,ListView>(::findViewById)
@@ -52,31 +54,32 @@ class Inventory : AppCompatActivity() {
     }
 
     private fun onItemClickOfBreadListView(parent: AdapterView<*>, view:View, pos:Int, id:Long)
-        = startBreadBatch(breadAdapter.keys[pos])
+        = startBreadBatch(breadAdapter!!.keys[pos])
 
 
     private fun startBreadBatch(breadName: String){
         Intent(this,Details::class.java)
-            .putExtra("name",breadName)
+            .putExtra("breadName",breadName)
+            .putExtra("bakeryName",bakery!!.getName())
             .then { startActivity(it) }
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         super.onContextItemSelected(item)
-        val breadName = breadAdapter.keys[selectedIndex];
+        val breadName = breadAdapter!!.keys[selectedIndex];
         when(item.itemId) {
             R.id.i_edit->{changeBreadNameThroughDialog(breadName)}
             R.id.i_view->{startBreadBatch(breadName)}
-            R.id.i_delete->{bakery.discardBreadNamed(breadName)}
+            R.id.i_delete->{bakery!!.discardBreadNamed(breadName)}
             else->return false
         }
-        breadAdapter.notifyDataSetChanged()
+        breadAdapter!!.notifyDataSetChanged()
         return false
     }
 
     override fun onResume() {
         super.onResume()
-        breadAdapter.notifyDataSetChanged()
+        breadAdapter!!.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
@@ -101,9 +104,9 @@ class Inventory : AppCompatActivity() {
             .setTitle("Ingrese un nuevo nombre")
             .setNegativeButton("Cancelar",null)
             .setPositiveButton("Aceptar",{ i,input->
-                SingletonManager.getBakery().renameBread(targetBreadName,editText.text.toString())
+                bakery!!.renameBread(targetBreadName,editText.text.toString())
                 SingletonManager.save()
-                breadAdapter.notifyDataSetChanged()
+                breadAdapter!!.notifyDataSetChanged()
             })
             .setView(editText)
             .create()

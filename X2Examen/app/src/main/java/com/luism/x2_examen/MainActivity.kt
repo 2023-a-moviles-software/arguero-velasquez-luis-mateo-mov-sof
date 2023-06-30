@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.widget.Button
 import com.luism.x2_examen.databinding.ActivityMainBinding
 import com.luism.x2_examen.persistence.SingletonManager
+import com.luism.x2_examen.util.Infix.Companion.then
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        SingletonManager.setContext("instance", applicationContext)
+        SingletonManager.init(applicationContext)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -40,7 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btn_inventory).setOnClickListener {
-            startActivity(Intent(this,Inventory::class.java))
+            Intent(this,Inventory::class.java)
+                .putExtra("bakeryName","mi_panaderia")
+                .then{startActivity(it)}
         }
     }
 

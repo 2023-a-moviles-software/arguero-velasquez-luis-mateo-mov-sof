@@ -11,14 +11,19 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.luism.x2_examen.persistence.SingletonManager
 import com.luism.x2_examen.util.Infix.Companion.then
+import epn.mov.bakery.model.Bakery
 import epn.mov.bakery.model.Bread
 import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 
 class NewBread : AppCompatActivity() {
+    var bakery:Bakery? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_bread)
+
+        val bakeryName = intent.getStringExtra("bakeryName")
+        this.bakery = SingletonManager.bakeries[bakeryName]
 
         R.id.btn_bake.then<Int, Button>(::findViewById)
             .setOnClickListener {
@@ -39,7 +44,7 @@ class NewBread : AppCompatActivity() {
                 .then(LocalDate::parse)
             val isSweet:Boolean = findViewById<CheckBox>(R.id.cb_sweet).isChecked
             Bread(name, price, elaborationDate, isSweet, stock)
-                .then { SingletonManager.getBakery().bakeBread(it) }
+                .then { bakery!!.bakeBread(it) }
             return true
         } catch (e:IllegalArgumentException){
             return false

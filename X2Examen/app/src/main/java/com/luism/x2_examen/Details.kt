@@ -10,7 +10,9 @@ import com.luism.x2_examen.util.Infix.Companion.then
 import epn.mov.bakery.model.Bread
 import java.text.DecimalFormat
 
+
 class Details : AppCompatActivity() {
+    var bakeryName:String? = null;
     var breadName:String? = null;
     var batchAdapter:BatchAdapter? = null;
 
@@ -18,18 +20,19 @@ class Details : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        var breadName = intent.getStringExtra("name")!!
-        batchAdapter = BatchAdapter(this,SingletonManager.getBakery().getBreads()[breadName]!!)
+        bakeryName =  intent.getStringExtra("bakeryName")!!
+        breadName = intent.getStringExtra("breadName")!!
+        batchAdapter = BatchAdapter(this,SingletonManager.bakeries[bakeryName]!!.getBreads()[breadName]!!)
 
         R.id.tv_breadName.then<Int,TextView>(::findViewById)
             .setText(breadName)
 
-        val breadCount = SingletonManager.getBakery().getBreadsCount()[breadName!!]
+        val breadCount = SingletonManager.bakeries[bakeryName]!!.getBreadsCount()[breadName!!]
         R.id.tv_bread_count.then<Int,TextView>(::findViewById)
             .setText("$breadCount unidades")
 
         val highestPrice = SingletonManager
-            .getBakery()
+            .bakeries[bakeryName]!!
             .getBreads()[breadName!!]!!
             .map { it.getPrice() }
             .max()
@@ -43,7 +46,7 @@ class Details : AppCompatActivity() {
 
         R.id.fab_delete.then<Int,FloatingActionButton>(::findViewById)
             .setOnClickListener{
-                SingletonManager.getBakery().discardBreadNamed(breadName)
+                SingletonManager.bakeries[bakeryName]!!.discardBreadNamed(breadName!!)
                 finish()
             }
     }
