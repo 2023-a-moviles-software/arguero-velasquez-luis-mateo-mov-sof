@@ -7,6 +7,9 @@ class BTrainer(
     var nombre:String = "",
     var description:String = ""
 ){
+    override fun toString(): String {
+        return "{id:$id,nombre:$nombre,description:$description}";
+    }
 
     companion object{
         var file = File("Stored")

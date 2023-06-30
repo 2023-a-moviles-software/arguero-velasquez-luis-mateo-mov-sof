@@ -10,9 +10,12 @@
         android:id="@+id/btn_ciclo_vida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:text="Ciclo VIda"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="241dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/btn_explicit"
+        app:layout_constraintStart_toEndOf="@+id/btn_explicit"
+        app:layout_constraintTop_toTopOf="@+id/btn_explicit"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,7 +44,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="List View"
-        tools:layout_editor_absoluteX="157dp"
-        tools:layout_editor_absoluteY="189dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/btn_implicit"
+        app:layout_constraintEnd_toEndOf="@+id/btn_ciclo_vida"
+        app:layout_constraintStart_toStartOf="@+id/btn_ciclo_vida"
+        app:layout_constraintTop_toTopOf="@+id/btn_implicit" />
+
+    <Button
+        android:id="@+id/btn_explicit"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="I. Explicit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_implicit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="I. Implicit"
+        app:layout_constraintEnd_toEndOf="@+id/btn_explicit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btn_explicit"
+        app:layout_constraintTop_toBottomOf="@+id/btn_explicit" />
+
+    <Button
+        android:id="@+id/btnDB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Base de datos"
+        app:layout_constraintEnd_toEndOf="@+id/btn_implicit"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btn_implicit"
+        app:layout_constraintTop_toBottomOf="@+id/btn_implicit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
