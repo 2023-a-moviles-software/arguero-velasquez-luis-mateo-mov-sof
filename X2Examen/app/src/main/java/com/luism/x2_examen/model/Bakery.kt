@@ -8,22 +8,15 @@ import kotlin.collections.HashMap
 
 @kotlinx.serialization.Serializable
 public class Bakery(
-    private var name:String,
-    private var ruc:String,
-    private var address:String,
+    var name:String,
+    val ruc:String,
+    var address:String,
 
 //    @Volatile
     protected var breads:HashMap<String, MutableList<Bread>>
 ){
 
     constructor(name:String,ruc:String,address:String) : this(name,ruc,address,HashMap())
-    fun getName():String{
-        return name;
-    }
-
-    fun setName(name:String){
-        this.name = name;
-    }
 
     fun getBreadsCount():Map<String,Int>{
         return breads.mapValues { it.value.sumOf { bread -> bread.getStock() } }

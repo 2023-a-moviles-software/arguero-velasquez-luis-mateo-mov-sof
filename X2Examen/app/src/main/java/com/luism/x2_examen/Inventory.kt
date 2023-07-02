@@ -50,7 +50,8 @@ class Inventory : AppCompatActivity() {
         }
 
         R.id.lv_breads.then<Int,ListView>(::findViewById)
-            .setOnItemClickListener(::onItemClickOfBreadListView)
+            .also{it.setOnItemClickListener(::onItemClickOfBreadListView)}
+
     }
 
     private fun onItemClickOfBreadListView(parent: AdapterView<*>, view:View, pos:Int, id:Long)
@@ -60,7 +61,7 @@ class Inventory : AppCompatActivity() {
     private fun startBreadBatch(breadName: String){
         Intent(this,Details::class.java)
             .putExtra("breadName",breadName)
-            .putExtra("bakeryName",bakery!!.getName())
+            .putExtra("bakeryName",bakery!!.name)
             .then { startActivity(it) }
     }
 
