@@ -1,7 +1,6 @@
 package com.luism.x2_examen
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.text.InputType
 import android.view.ContextMenu
@@ -10,19 +9,13 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.ListView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.luism.x2_examen.R.layout
 import com.luism.x2_examen.persistence.SingletonManager
 import com.luism.x2_examen.util.Infix.Companion.then
 import epn.mov.bakery.model.Bakery
-import epn.mov.bakery.model.Bread
 
 class Inventory : AppCompatActivity() {
     private var selectedIndex:Int = 0
