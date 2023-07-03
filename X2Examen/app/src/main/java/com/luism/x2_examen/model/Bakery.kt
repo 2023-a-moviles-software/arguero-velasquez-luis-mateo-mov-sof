@@ -1,7 +1,6 @@
 @file:JvmName("Bakery")
 package epn.mov.bakery.model
 
-import com.luism.x2_examen.util.Infix.Companion.then
 import java.time.LocalDate
 import java.util.*
 import kotlin.collections.HashMap
@@ -12,7 +11,6 @@ public class Bakery(
     val ruc:String,
     var address:String,
 
-//    @Volatile
     protected var breads:HashMap<String, MutableList<Bread>>
 ){
 
@@ -61,25 +59,12 @@ public class Bakery(
         breads.forEach { (_, u) -> u.removeIf { it.getStock()==0 } }
     }
 
-
-
-    fun isBreadExpired(bread: Bread, maxSellableAge: Int):Boolean{
-        val todayLocalDate = LocalDate.now();
-        val daysAgo = {date:LocalDate -> date.until(todayLocalDate).days}
-        val expirePredicate = {date:LocalDate -> daysAgo(date)>maxSellableAge};
-        return expirePredicate(bread.getElaborationDate())
-    }
-
     fun discardBreadNamed(breadName:String):Boolean{
         return breads.remove(breadName)==null;
     }
 
     fun discardBreadOlderThan(maxSellableAge:Int){
-        val breadExpiredPredicate = {bread: Bread ->isBreadExpired(bread,maxSellableAge)}
-
-
-
-        breads.forEach { (_, breadList) -> breadList.removeIf(breadExpiredPredicate) }
+        breads.forEach { (_, breadList) -> breadList.removeIf(getIsBreadExpiredPredicate(maxSellableAge)) }
 
     }
 
@@ -91,5 +76,18 @@ public class Bakery(
         affectedBreads.forEach { it.name = new }
 
         return true
+    }
+
+    companion object{
+        fun getIsBreadExpiredPredicate(maxSellableAge:Int): (Bread)->Boolean {
+            return {bread: Bread ->isBreadExpired(bread,maxSellableAge)}
+        }
+
+        fun isBreadExpired(bread: Bread, maxSellableAge: Int):Boolean{
+            val todayLocalDate = LocalDate.now();
+            val daysAgo = {date:LocalDate -> date.until(todayLocalDate).days}
+            val expirePredicate = {date:LocalDate -> daysAgo(date)>maxSellableAge};
+            return expirePredicate(bread.getElaborationDate())
+        }
     }
 }

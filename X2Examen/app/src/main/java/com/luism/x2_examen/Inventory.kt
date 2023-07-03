@@ -3,6 +3,7 @@ package com.luism.x2_examen
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.InputType
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
@@ -72,7 +73,9 @@ class Inventory : AppCompatActivity() {
             R.id.i_edit->{changeBreadNameThroughDialog(breadName)}
             R.id.i_view->{startBreadBatch(breadName)}
             R.id.i_delete->{bakery!!.discardBreadNamed(breadName)}
-            else->return false
+            R.id.i_sell->{sellBreadThroughDialog(breadName)}
+            R.id.i_discard_date->{discardAgedBreadThroughDialog(breadName)}
+            else->{return false}
         }
         breadAdapter!!.notifyDataSetChanged()
         return false
@@ -94,7 +97,7 @@ class Inventory : AppCompatActivity() {
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_sell_discard, menu)
         selectedIndex = (menuInfo as AdapterView.AdapterContextMenuInfo).position
     }
 
@@ -104,14 +107,48 @@ class Inventory : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Ingrese un nuevo nombre")
             .setNegativeButton("Cancelar",null)
-            .setPositiveButton("Aceptar",{ i,input->
-                bakery!!.renameBread(targetBreadName,editText.text.toString())
+            .setPositiveButton("Aceptar") { i, input ->
+                bakery!!.renameBread(targetBreadName, editText.text.toString())
                 SingletonManager.save()
                 breadAdapter!!.notifyDataSetChanged()
-            })
+            }
             .setView(editText)
             .create()
             .show()
     }
 
+    fun sellBreadThroughDialog(targetBreadName: String){
+        val editText = EditText(this)
+            .also { it.inputType=InputType.TYPE_CLASS_NUMBER }
+
+        AlertDialog.Builder(this)
+            .setTitle("Ingrese la cantidad de pan a vender")
+            .setNegativeButton("Cancelar",null)
+            .setPositiveButton("Aceptar") { i, input ->
+                bakery!!.sellBread(
+                    targetBreadName,
+                    editText.text.toString().toInt()
+                )
+            }
+            .setView(editText)
+            .create()
+            .show()
+    }
+
+    fun discardAgedBreadThroughDialog(targetBreadName: String){
+        val editText = EditText(this)
+            .also { it.inputType=InputType.TYPE_CLASS_NUMBER }
+
+        AlertDialog.Builder(this)
+            .setTitle("Ingrese la edad máxima que el pan puede tener")
+            .setNegativeButton("Cancelar",null)
+            .setPositiveButton("Aceptar") { i, input ->
+                val breadMaxAge = editText.toString().toInt()
+                bakery!!.getBreads()[targetBreadName]!!
+                    .removeIf(Bakery.getIsBreadExpiredPredicate(breadMaxAge))
+            }
+            .setView(editText)
+            .create()
+            .show()
+    }
 }
