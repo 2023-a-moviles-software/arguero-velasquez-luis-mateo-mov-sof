@@ -136,7 +136,7 @@ class Inventory : AppCompatActivity() {
             .setTitle("Ingrese la edad máxima que el pan puede tener")
             .setNegativeButton("Cancelar",null)
             .setPositiveButton("Aceptar") { i, input ->
-                val breadMaxAge = editText.toString().toInt()
+                val breadMaxAge = editText.text.toString().toInt()
                 bakery!!.getBreads()[targetBreadName]!!
                     .removeIf(Bakery.getIsBreadExpiredPredicate(breadMaxAge))
             }

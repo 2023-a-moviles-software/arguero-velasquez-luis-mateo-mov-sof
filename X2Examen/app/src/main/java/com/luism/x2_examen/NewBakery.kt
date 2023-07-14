@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.luism.x2_examen.persistence.SingletonManager
 import com.luism.x2_examen.util.Infix.Companion.then
@@ -49,7 +50,8 @@ class NewBakery : AppCompatActivity() {
     }
 
     fun updateBakery(newName:String,ruc:String,address:String):Boolean{
-        if(SingletonManager.bakeries.keys.contains(newName)) return false
+        if(SingletonManager.bakeries.keys.contains(newName)
+         and (newName != bakeryName)) return false
 
         SingletonManager.bakeries.remove(bakeryName)!!
             .also { it.name = newName }
@@ -63,11 +65,12 @@ class NewBakery : AppCompatActivity() {
         actionFunction = ::updateBakery
         populateFields(bakeryName!!)
         R.id.btn_create.then { findViewById<Button>(it) }.setText("Actualizar")
+        R.id.tv_action.then { findViewById<TextView>(it) }.setText("Actualizar Panadería")
     }
 
     fun populateFields(bakeryName:String){
         val bakery = SingletonManager.bakeries[bakeryName]!!
-        R.id.intxt_name.then { findViewById<EditText>(it) }.setText(bakery.name)
+        R.id.intxt_name.then { findViewById<EditText>(it) }.setText(bakeryName)
         R.id.intxt_ruc.then { findViewById<EditText>(it) }.setText(bakery.ruc)
         R.id.intxt_address.then { findViewById<EditText>(it) }.setText(bakery.address)
     }

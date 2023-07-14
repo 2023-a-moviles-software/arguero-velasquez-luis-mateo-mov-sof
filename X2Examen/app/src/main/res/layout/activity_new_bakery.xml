@@ -7,7 +7,7 @@
     tools:context=".NewBakery">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -30,7 +30,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_action" />
 
     <EditText
         android:id="@+id/intxt_ruc"
