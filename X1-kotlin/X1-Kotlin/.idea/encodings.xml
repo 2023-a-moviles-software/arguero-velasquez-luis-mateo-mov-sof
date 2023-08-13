@@ -4,5 +4,8 @@
     <file url="file://$PROJECT_DIR$/src/main/java/epn.mov.bakery/MainClass.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/epn.mov.bakery/gui/Dashboard.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/epn.mov.bakery/gui/Login.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqlBreadManager.kt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqlObjectManager.kt" charset="UTF-8" />
+    <file url="PROJECT" charset="windows-1252" />
   </component>
 </project>

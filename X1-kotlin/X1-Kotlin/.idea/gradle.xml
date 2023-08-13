@@ -4,12 +4,14 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
+            <option value="/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin" />
+            <option value="/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/main" />
+            <option value="/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src" />
+            <option value="/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main" />
           </set>
         </option>
       </GradleProjectSettings>

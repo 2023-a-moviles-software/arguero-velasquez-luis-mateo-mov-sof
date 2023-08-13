@@ -1,0 +1,11 @@
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/Bakery.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/SingletonManager.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqliteSingleton.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/Bread.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/KLocalDateSerializer.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqlObjectManager.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/TestFile.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqlBakeryManager.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqlBreadManager.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/BreadCollection.kt
+/media/luism/Shared/Users/luism/Documents/deletemelater/arguero-velasquez-luis-mateo-mov-sof/X1-kotlin/X1-Kotlin/src/main/kotlin/epn/mov/bakery/model/SqlManager/SqlBreadCollectionManager.kt

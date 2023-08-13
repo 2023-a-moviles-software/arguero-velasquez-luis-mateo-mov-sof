@@ -22,6 +22,7 @@ public class Register extends javax.swing.JFrame {
     public Register(String name) {
         initComponents();
         this.bakeryName = name;
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -41,11 +42,11 @@ public class Register extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Creación de Panadería");
+        setTitle("Creaciï¿½n de Panaderï¿½a");
 
         jLabel1.setText("RUC");
 
-        jLabel2.setText("Dirección");
+        jLabel2.setText("Direcciï¿½n");
 
         jButton1.setText("Continuar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +108,9 @@ public class Register extends javax.swing.JFrame {
                 jTFRuc.getText(),
                 jTFAddress.getText());
         SingletonManager.Companion.setBakery(bakery);
-        JOptionPane.showMessageDialog(null,"PanaderÃ­a nueva creada.","Creación exitosa",JOptionPane.INFORMATION_MESSAGE);;
+        SingletonManager.Companion.save();
+        JOptionPane.showMessageDialog(null,"PanaderÃ­a nueva creada.","CreaciÃ³n exitosa",JOptionPane.INFORMATION_MESSAGE);;
+        this.setVisible(false);
         new Dashboard().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

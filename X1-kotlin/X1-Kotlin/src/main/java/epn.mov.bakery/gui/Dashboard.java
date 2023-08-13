@@ -29,12 +29,13 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     public Dashboard() {
-        initComponents();
         this.bakery = SingletonManager.Companion.getBakery();
+        initComponents();
         jTFNewBreadEDate.setText(LocalDate.now().toString());
         this.setTitle("Panaderia: "+bakery.getName());
         updateTable();
         updateList();
+        setLocationRelativeTo(null);
     }
 
     public void updateList(){
@@ -124,7 +125,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton2.setText("jButton2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Mi panadería");
+        setTitle(bakery.getName());
         setBackground(new java.awt.Color(250, 250, 250));
 
         jPanel1.setBackground(new java.awt.Color(250, 250, 250));
@@ -147,7 +148,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("A?adir");
+        jButton1.setText("Añadir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -419,7 +420,7 @@ public class Dashboard extends javax.swing.JFrame {
         bakery.bakeBread(b);
         updateList();
         resetNewBread();
-        SingletonManager.Companion.setBakery(bakery);
+        SingletonManager.Companion.save();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -436,7 +437,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         bakery.discardOutOfStock();
         updateList();
-        SingletonManager.Companion.setBakery(bakery);
+        SingletonManager.Companion.save();
         JOptionPane.showMessageDialog(
                 this,
                 "Venta exitosa",
@@ -467,7 +468,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         updateList();
         updateTable();
-        SingletonManager.Companion.setBakery(bakery);
+        SingletonManager.Companion.save();
     }//GEN-LAST:event_jBDiscardActionPerformed
 
     /**

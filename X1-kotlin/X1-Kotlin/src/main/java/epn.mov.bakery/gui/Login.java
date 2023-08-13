@@ -6,6 +6,7 @@ package epn.mov.bakery.gui;
 
 import epn.mov.bakery.gui.Dashboard;
 import epn.mov.bakery.gui.Dashboard;
+import epn.mov.bakery.model.Bakery;
 import epn.mov.bakery.model.SingletonManager;
 
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -96,13 +98,14 @@ public class Login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String bakeryName = jTextField1.getText().toLowerCase().replace(" ", "_");
         if(!bakeryName.matches("\\w([\\w\\s]+\\w)?")){
-            JOptionPane.showMessageDialog(this, "Nombre ingresado no es v?lido.<br>Ocupe, solo letras y espacios");
+            JOptionPane.showMessageDialog(this, "Nombre ingresado no es válido.<br>Ocupe, solo letras y espacios");
             return;
         }
 
-        Boolean bakeryExists = SingletonManager.Companion.setContext(bakeryName);
+        SingletonManager.Companion.load(bakeryName);
+        Bakery bakery = SingletonManager.Companion.getBakery();
 
-        if(bakeryExists){
+        if(bakery != null){
             JOptionPane.showMessageDialog(null,"Panadería ya existente, se ha cargado.","Carga exitosa",JOptionPane.INFORMATION_MESSAGE);
             new Dashboard().setVisible(true);
         }
