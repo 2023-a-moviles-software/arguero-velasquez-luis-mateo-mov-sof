@@ -1,6 +1,10 @@
 @file:JvmName("Bakery")
 package epn.mov.bakery.model
 
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.luism.x2_examen.model.FirestormEmmiter
+import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 import java.util.*
 import java.util.stream.Collectors
@@ -8,20 +12,14 @@ import kotlin.collections.HashMap
 import kotlin.jvm.Transient
 
 public class Bakery(
-){
-    var name:String = ""
-    var ruc:String = ""
-    var address:String = ""
-
+    var name:String = "",
+    var ruc:String = "",
+    var address:String = "",
     var collection:MutableMap<String, BreadCollection> = mutableMapOf()
+):FirestormEmmiter
+{
 
 
-    constructor(name:String,ruc:String,address:String) : this(){
-        this.name = name
-        this.ruc = ruc
-        this.address = address
-        this.collection = HashMap()
-    }
 
     fun getBreadsCount():Map<String,Int>{
         val ret =collection
@@ -94,9 +92,51 @@ public class Bakery(
         return true
     }
 
+    fun toMap(): Map<String, Any> {
+        return mapOf(
+            "name" to name,
+            "ruc" to ruc,
+            "address" to address
+        )
+    }
+
+    override fun add(collectionReference: CollectionReference) {
+        collectionReference.document(ruc).set(toMap())
+        collection.forEach { s, breadCollection -> breadCollection.add(collectionReference.document(ruc).collection("breads"))}
+    }
+
+    override fun set(collectionReference: CollectionReference) {
+        collectionReference.document(ruc).set(toMap())
+        collection.forEach { s, breadCollection -> breadCollection.add(collectionReference.document(ruc).collection("breads"))}
+    }
+
+    override fun delete(collectionReference: CollectionReference) {
+        collectionReference.document(ruc).delete()
+        collection.forEach { s, breadCollection -> breadCollection.delete(collectionReference.document(ruc).collection("breads"))}
+    }
+
     override fun toString(): String {
         return "{name:$name,bread_collection:$collection}"
     }
 
+    companion object CREATOR:FirestormEmmiter.CREATOR<Bakery>{
+        override suspend fun createFromDocumentSnapshow(documentSnapshot: DocumentSnapshot): Bakery {
+            val breadCollections = documentSnapshot
+                .reference.collection("breads")
+                .get()
+                .await()
+                .documents
+                .map { BreadCollection.CREATOR.createFromDocumentSnapshow((it)) }
+                .associateBy { it.id }
+                .toMutableMap()
 
+            return Bakery(
+                documentSnapshot.getString("name")!!,
+                documentSnapshot.getString("ruc")!!,
+                documentSnapshot.getString("address")!!,
+                breadCollections
+            )
+        }
+
+    }
 }

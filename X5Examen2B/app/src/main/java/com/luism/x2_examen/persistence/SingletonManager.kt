@@ -34,6 +34,7 @@ class SingletonManager {
                 .close()
         }
         private fun load(){
+
             try{
                 if(checkFileExists()) loadFile()
                 else initWithoutFile()
