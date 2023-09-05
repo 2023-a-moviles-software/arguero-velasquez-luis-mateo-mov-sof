@@ -13,6 +13,10 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import com.luism.x2_examen.databinding.ActivityMainBinding
 import com.luism.x2_examen.persistence.SingletonManager
 import com.luism.x2_examen.util.Infix.Companion.then

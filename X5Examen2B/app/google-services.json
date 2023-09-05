@@ -26,9 +26,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:255205870685:android:e9a73e8dd1aca45eead1b4",
+        "mobilesdk_app_id": "1:255205870685:android:32c76579028598a1ead1b4",
         "android_client_info": {
-          "package_name": "com.luism.x5_examen"
+          "package_name": "com.luism.x2_examen"
         }
       },
       "oauth_client": [],
