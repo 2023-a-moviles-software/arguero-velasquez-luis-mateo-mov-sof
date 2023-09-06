@@ -80,7 +80,6 @@ class Inventory : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        SingletonManager.save()
     }
 
     override fun onCreateContextMenu(
@@ -101,7 +100,6 @@ class Inventory : AppCompatActivity() {
             .setNegativeButton("Cancelar",null)
             .setPositiveButton("Aceptar") { i, input ->
                 bakery!!.renameBread(targetBreadName, editText.text.toString())
-                SingletonManager.save()
                 breadAdapter!!.notifyDataSetChanged()
             }
             .setView(editText)

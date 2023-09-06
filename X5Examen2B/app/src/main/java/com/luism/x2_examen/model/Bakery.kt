@@ -2,9 +2,15 @@
 package epn.mov.bakery.model
 
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.luism.x2_examen.model.FirestormEmmiter
+import com.luism.x2_examen.util.Infix.Companion.pipe
+import com.luism.x2_examen.util.Infix.Companion.promisePipe
+import com.luism.x2_examen.util.Infix.Companion.toBigPromise
+import com.luism.x2_examen.util.Infix.Companion.toPromise
 import kotlinx.coroutines.tasks.await
+import org.chromium.base.Promise
 import java.time.LocalDate
 import java.util.*
 import java.util.stream.Collectors
@@ -15,7 +21,8 @@ public class Bakery(
     var name:String = "",
     var ruc:String = "",
     var address:String = "",
-    var collection:MutableMap<String, BreadCollection> = mutableMapOf()
+    var collectionReference:CollectionReference,
+    var collection:MutableMap<String, BreadCollection> = mutableMapOf(),
 ):FirestormEmmiter
 {
 
@@ -31,10 +38,19 @@ public class Bakery(
         return Collections.unmodifiableMap(collection.mapValues { it.value.breads });
     }
     fun bakeBread(bread: Bread){
-        val exists = collection.contains(bread.name)
+        var breadCol = collection[bread.name]
 
-        if(exists) collection[bread.name]!!.breads.add(bread)
-        else collection[bread.name] = BreadCollection(mutableListOf(bread))
+        if(breadCol!=null){
+            bread.setParentReference(breadCol.getDocumentReference().collection("breads"))
+            breadCol.breads.add(bread)
+        }
+        else{
+            breadCol = BreadCollection(mutableListOf(bread),bread.name,collectionReference)
+            collection[bread.name] = breadCol
+            breadCol.add()
+        }
+        bread.add()
+
     }
 
     fun getByName(name:String):List<Bread>{
@@ -42,23 +58,14 @@ public class Bakery(
     }
 
     fun sellBread(name:String,quantity:Int):Boolean{
-        val breadList = getByName(name);
-        val availableBread = breadList
-            .map {it.stock}
-            .reduceOrNull { acc, i -> acc+i }?:0
+        val breadCol = collection[name];
+        if(breadCol==null) return false
 
+        val availableBread = breadCol.count()
         if(quantity>availableBread) return false;
 
-        var remainingSells = quantity;
-        breadList.forEach {
-            val stock = it.stock
-            val newStock = if(stock>remainingSells)
-                stock-remainingSells
-                else 0;
-
-            it.stock = newStock
-            remainingSells -= stock-newStock;
-        }
+        breadCol.remove(quantity)
+        breadCol.set()
         return true;
     }
 
@@ -80,7 +87,7 @@ public class Bakery(
     }
 
     fun discardBreadNamed(breadName:String){
-        collection.remove(breadName)
+        collection.remove(breadName)?.delete()
     }
 
     fun renameBread(oldName:String, newName: String):Boolean{
@@ -88,7 +95,9 @@ public class Bakery(
         if(collection.containsKey(newName)) return false
 
         collection[newName] = collection.remove(oldName)!!
+            .apply { delete() }
             .apply { renameBread(newName) }
+            .apply { add() }
         return true
     }
 
@@ -100,19 +109,28 @@ public class Bakery(
         )
     }
 
-    override fun add(collectionReference: CollectionReference) {
-        collectionReference.document(ruc).set(toMap())
-        collection.forEach { s, breadCollection -> breadCollection.add(collectionReference.document(ruc).collection("breads"))}
+    override fun setParentReference(collectionReference: CollectionReference){
+        this.collectionReference = collectionReference
     }
 
-    override fun set(collectionReference: CollectionReference) {
-        collectionReference.document(ruc).set(toMap())
-        collection.forEach { s, breadCollection -> breadCollection.add(collectionReference.document(ruc).collection("breads"))}
+    override fun getDocumentReference(): DocumentReference {
+        return  this.collectionReference.document(ruc)
     }
 
-    override fun delete(collectionReference: CollectionReference) {
+
+    override fun add() {
+        collectionReference.document(ruc).set(toMap())
+        collection.forEach { s, breadCollection -> breadCollection.add()}
+    }
+
+    override fun set() {
+        collectionReference.document(ruc).set(toMap())
+        collection.forEach { s, breadCollection -> breadCollection.add()}
+    }
+
+    override fun delete() {
         collectionReference.document(ruc).delete()
-        collection.forEach { s, breadCollection -> breadCollection.delete(collectionReference.document(ruc).collection("breads"))}
+        collection.forEach { s, breadCollection -> breadCollection.delete()}
     }
 
     override fun toString(): String {
@@ -120,22 +138,24 @@ public class Bakery(
     }
 
     companion object CREATOR:FirestormEmmiter.CREATOR<Bakery>{
-        override suspend fun createFromDocumentSnapshow(documentSnapshot: DocumentSnapshot): Bakery {
-            val breadCollections = documentSnapshot
-                .reference.collection("breads")
+        override fun createFromDocumentSnapshow(documentSnapshot: DocumentSnapshot): Promise<Bakery> {
+            return documentSnapshot.reference.collection("breads")
                 .get()
-                .await()
-                .documents
-                .map { BreadCollection.CREATOR.createFromDocumentSnapshow((it)) }
-                .associateBy { it.id }
-                .toMutableMap()
+                .toPromise()
+                .promisePipe { it.documents.map(BreadCollection.CREATOR::createFromDocumentSnapshow).toBigPromise() }
+                .pipe {breadColList->
+                    val breadCollections = breadColList.filterNotNull()
+                        .associateBy { it.id }
+                        .toMutableMap()
+                    Bakery(
+                        documentSnapshot.getString("name")!!,
+                        documentSnapshot.getString("ruc")!!,
+                        documentSnapshot.getString("address")!!,
+                        documentSnapshot.reference.parent,
+                        breadCollections,
+                    )
+                }
 
-            return Bakery(
-                documentSnapshot.getString("name")!!,
-                documentSnapshot.getString("ruc")!!,
-                documentSnapshot.getString("address")!!,
-                breadCollections
-            )
         }
 
     }

@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        SingletonManager.save()
     }
 
     override fun onCreateContextMenu(

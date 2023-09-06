@@ -43,7 +43,7 @@ class NewBakery : AppCompatActivity() {
 
     fun createBakery(name:String,ruc:String,address:String):Boolean{
         if(SingletonManager.bakeries.keys.contains(name)) return false
-        SingletonManager.bakeries[name] = Bakery(name,ruc,address)
+        SingletonManager.bakeries[name] = Bakery(name,ruc,address, SingletonManager.reference)
         return true
     }
 
