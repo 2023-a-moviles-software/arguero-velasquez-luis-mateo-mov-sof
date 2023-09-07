@@ -43,7 +43,9 @@ class NewBakery : AppCompatActivity() {
 
     fun createBakery(name:String,ruc:String,address:String):Boolean{
         if(SingletonManager.bakeries.keys.contains(name)) return false
-        SingletonManager.bakeries[name] = Bakery(name,ruc,address, SingletonManager.reference)
+        val bakery = Bakery(name,ruc,address, SingletonManager.reference)
+        SingletonManager.bakeries[name] = bakery
+        bakery.add()
         return true
     }
 
@@ -52,9 +54,11 @@ class NewBakery : AppCompatActivity() {
          and (newName != bakeryName)) return false
 
         SingletonManager.bakeries.remove(bakeryName)!!
+            .also { it.delete() }
             .also { it.name = newName }
             .also { it.address = address }
             .also { SingletonManager.bakeries[newName] = it }
+            .also { it.add() }
         return true
     }
 

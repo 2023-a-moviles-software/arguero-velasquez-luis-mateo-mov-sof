@@ -4,6 +4,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.luism.x2_examen.model.FirestormEmmiter
+import com.luism.x2_examen.util.Infix.Companion.listen
 import com.luism.x2_examen.util.Infix.Companion.pipe
 import com.luism.x2_examen.util.Infix.Companion.promisePipe
 import com.luism.x2_examen.util.Infix.Companion.toBigPromise
@@ -25,7 +26,11 @@ data class BreadCollection(
     }
 
     fun renameBread(newName:String){
-        breads.forEach{ it.name = newName }
+        id=newName
+        breads.forEach{
+            it.name = newName
+            it.setParentReference(getDocumentReference().collection("breads"))
+        }
     }
 
     fun count():Int{

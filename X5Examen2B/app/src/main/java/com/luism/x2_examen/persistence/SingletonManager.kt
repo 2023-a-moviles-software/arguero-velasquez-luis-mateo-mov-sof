@@ -16,7 +16,11 @@ import com.luism.x2_examen.util.Infix.Companion.pipe
 import com.luism.x2_examen.util.Infix.Companion.promisePipe
 import com.luism.x2_examen.util.Infix.Companion.toBigPromise
 import com.luism.x2_examen.util.Infix.Companion.toPromise
+import com.luism.x2_examen.util.Infix.Companion.toPromiseObserver
+import com.luism.x2_examen.util.PromiseObserver
+import org.chromium.base.Log
 import org.chromium.base.Promise
+import java.io.Console
 import java.io.FileNotFoundException
 
 class SingletonManager {
@@ -28,14 +32,16 @@ class SingletonManager {
         private var context: Context? = null;
         private var _bakeries: MutableMap<String,Bakery> = mutableMapOf();
 
-        fun init(context: Context):Promise<Unit>{
+        fun init(context: Context):PromiseObserver<Unit>{
             reference = Firebase.firestore.collection("bakeries")
 
             return reference.get()
                 .toPromise()
-                .promisePipe { it.documents.map(Bakery.CREATOR::createFromDocumentSnapshow).toBigPromise() }
-                .listen { _bakeries = it.filterNotNull().associateBy { it.ruc }.toMutableMap() }
+                .promisePipe {it.documents.map{d->Bakery.CREATOR.createFromDocumentSnapshow(d)}.toBigPromise() }
+                .listen { _bakeries = it.filterNotNull().associateBy { it.name }.toMutableMap() }
                 .pipe {}
+                .toPromiseObserver{Log.e("cookie",it.toString())}
+
         }
 
 

@@ -1,8 +1,10 @@
 package com.luism.x2_examen.util
 
+import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.luism.x2_examen.util.Infix.Companion.then
 import org.chromium.base.Promise
+import java.lang.Exception
 
 class Infix {
     companion object{
@@ -53,6 +55,9 @@ class Infix {
         fun <E> List<Promise<E>>.toBigPromise():Promise<List<E?>>{
             var remaining = this.size
             val solvedValues = ArrayList<E?>(remaining)
+            if (remaining==0) return Promise.fulfilled(solvedValues)
+
+
             val bigPromise = Promise<List<E?>>()
 
             this.forEachIndexed { idx, promise ->
@@ -61,10 +66,14 @@ class Infix {
                 { v ->
                     solvedValues[idx] = v
                     remaining -= 1
-                    if(remaining <= 0) bigPromise.fulfill(solvedValues)
+                    if(remaining <= 0){
+                        bigPromise.fulfill(solvedValues)
+                    }
                 },{e->
                     remaining -= 1
-                    if(remaining <= 0) bigPromise.fulfill(solvedValues)
+                    if(remaining <= 0){
+                        bigPromise.fulfill(solvedValues)
+                    }
                 }
                 )
             }
@@ -76,8 +85,13 @@ class Infix {
             val promise = Promise<E>()
             addOnSuccessListener { promise.fulfill(it) }
             addOnFailureListener { promise.reject(it) }
+            addOnCanceledListener { Log.i("cookie","uncatched") }
 
             return promise
+        }
+
+        fun <E> Promise<E>.toPromiseObserver(exceptionCallback:(Exception)->Unit={_->;}):PromiseObserver<E>{
+            return PromiseObserver(this,exceptionCallback)
         }
 
     }

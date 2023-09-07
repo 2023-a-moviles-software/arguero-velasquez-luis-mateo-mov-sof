@@ -1,10 +1,12 @@
 @file:JvmName("Bakery")
 package epn.mov.bakery.model
 
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.luism.x2_examen.model.FirestormEmmiter
+import com.luism.x2_examen.util.Infix.Companion.listen
 import com.luism.x2_examen.util.Infix.Companion.pipe
 import com.luism.x2_examen.util.Infix.Companion.promisePipe
 import com.luism.x2_examen.util.Infix.Companion.toBigPromise
@@ -45,7 +47,8 @@ public class Bakery(
             breadCol.breads.add(bread)
         }
         else{
-            breadCol = BreadCollection(mutableListOf(bread),bread.name,collectionReference)
+            breadCol = BreadCollection(mutableListOf(bread),bread.name,getDocumentReference().collection("breads"))
+            bread.setParentReference(breadCol.getDocumentReference().collection("breads"))
             collection[bread.name] = breadCol
             breadCol.add()
         }
